@@ -1,0 +1,45 @@
+<form class="card" [formGroup]="form" (ngSubmit)="submit()">
+  <h2>Login as admin</h2>
+
+  <div class="alert alert-danger" *ngIf="auth.error$ | async as error">
+    {{error}}
+  </div>
+
+  <div class="alert alert-info" *ngIf="message">
+    {{ message }}
+  </div>
+
+  <div class="form-control"
+  [ngClass]="{invalid: form.get('email').touched && form.get('email').invalid}">
+    <label for="email">Email:</label>
+    <input id="email" type="email" formControlName="email">
+    <div *ngIf="form.get('email').touched && form.get('email').invalid"
+      class="validation">
+      <small *ngIf="form.get('email').errors.required">
+        Please insert your email
+      </small>
+      <small *ngIf="form.get('email').errors.email">
+        Incorrect input
+      </small>
+    </div>
+  </div>
+
+  <div class="form-control"
+       [ngClass]="{invalid: form.get('password').touched && form.get('password').invalid}">
+    <label for="password">Password:</label>
+    <input id="password" type="password" formControlName="password">
+    <div class="validation"
+      *ngIf="form.get('password').touched && form.get('password').invalid">
+      <small *ngIf="form.get('password').errors.required">
+        Please enter your password
+      </small>
+      <small *ngIf="form.get('password').errors.minlength">
+        Incorrect input: {{form.get('password').errors.minlength.actualLength}} symbols.
+        Please enter at least {{form.get('password').errors.minlength.requiredLength}} symbols
+      </small>
+    </div>
+  </div>
+
+  <!-- Se la form non è valida la disabilitiamo ([disabled] = true) -->
+  <button type="submit" class="btn btn-primary" [disabled]="form.invalid || submitted">Login!</button>
+</form>

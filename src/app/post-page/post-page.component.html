@@ -1,0 +1,24 @@
+<div *ngIf="post$ | async as post; else loading">
+  <div class="post">
+    <div class="header">
+      <h1>{{ post.title }}</h1>
+
+      <!-- qui routerLink senza binding perche ci porta alla homepage SEMPRE -->
+      <button routerLink="/"
+        class="btn btn-link">To the main page</button>
+    </div>
+
+    <div class="info">
+      <strong>{{ post.author }}</strong>
+      <small>{{ post.date | date:'medium':null:'it'}}</small>
+    </div>
+
+    <div>
+      <quill-view-html [content]="post.text"></quill-view-html>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <p class="text-center">Loading...</p>
+</ng-template>
